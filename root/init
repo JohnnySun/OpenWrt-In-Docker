@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -d /dev/shm ]; then
+	umount /dev/shm || umount -l /dev/shm
+	rmdir /dev/shm || rm -rf /dev/shm
+fi
+[ -d /var/run ] || mkdir -p /var/run
+for t in filter nat mangle raw; do
+	iptables -t $t --list-rules
+done
+exec /sbin/init "$@"

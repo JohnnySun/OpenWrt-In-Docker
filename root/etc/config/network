@@ -1,0 +1,21 @@
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.255.0.0'
+
+config interface 'lan'
+	option proto 'static'
+	option ipaddr '192.168.129.1'
+	option netmask '255.255.255.0'
+	option ifname 'eth0 eth1 eth2 eth3'
+	list dns '223.5.5.5'
+	option type 'bridge'
+
+config interface 'wan'
+	option ifname 'eth4'
+	option proto 'pppoe'
+	option password '123456'
+	option ipv6 'auto'
+	option username '00000000000'
+
