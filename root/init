@@ -8,4 +8,6 @@ fi
 for t in filter nat mangle raw; do
 	iptables -t $t --list-rules
 done
+[ -d /etc/openclash/config ] || mkdir -p /etc/openclash/config
+
 exec /sbin/init "$@"

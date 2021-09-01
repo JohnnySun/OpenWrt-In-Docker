@@ -2,10 +2,17 @@ version: '3'
 services:
     openwrt:
         build: . 
-        restart: unless-stopped
+        restart: always
+        volumes:
+            - ./data/openclash:/etc/openclash
+        ports:
+            - 80:80
+            - 9090:9090
+        network_mode: bridge
         devices: 
             - /dev/ppp
             - /dev/kmsg
+            - /dev/net/tun
         cap_add: 
             - ALL
             - NET_ADMIN
@@ -13,38 +20,5 @@ services:
             - CAP_SYSLOG
             - CAP_NET_BIND_SERVICE
             - CAP_SYS_TTY_CONFIG
-        networks:
-            - v1f0
-            - v1f1
-            - v1f2
-            - v1f3 
-            - v5f0
         entrypoint: 
             - /init
-
-networks:
-    v1f0:
-        driver: macvlan
-        driver_opts:
-            parent: enp1s0f0
-            macvlan_mode: bridge 
-    v1f1:
-        driver: macvlan
-        driver_opts:
-            parent: enp1s0f1
-            macvlan_mode: bridge 
-    v1f2:
-        driver: macvlan
-        driver_opts:
-            parent: enp1s0f2
-            macvlan_mode: bridge
-    v1f3:
-        driver: macvlan
-        driver_opts:
-            parent: enp1s0f3
-            macvlan_mode: bridge
-    v5f0:
-        driver: macvlan
-        driver_opts:
-            parent: enp5s0
-            macvlan_mode: bridge
